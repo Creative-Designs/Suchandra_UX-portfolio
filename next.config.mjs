@@ -1,4 +1,4 @@
-const repositoryName = "REPOSITORY_NAME";
+const repositoryName = "Suchandra_UX-portfolio";
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
