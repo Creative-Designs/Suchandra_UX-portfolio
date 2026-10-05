@@ -1,3 +1,5 @@
+import { assetPath } from "@/lib/assets"
+
 /**
  * ---------------------------------------------------------------------------
  * PORTFOLIO CONTENT
@@ -149,7 +151,7 @@ export const caseStudies: CaseStudy[] = [
     role: "Lead UX Designer · End-to-end design, workflow mapping, stakeholder alignment",
     timeframe: "8 months",
     tags: ["Workflow design", "Enterprise UX", "Design systems"],
-    cover: "/assets/work/claims-platform.png",
+    cover: assetPath("/assets/work/claims-platform.png"),
     coverAlt:
       "Abstract illustration of a claims operations dashboard with panels, a data table, and a trend chart.",
     sections: [
@@ -191,7 +193,7 @@ export const caseStudies: CaseStudy[] = [
     role: "Senior UX Designer · Flow design, compliance collaboration, pattern library",
     timeframe: "5 months",
     tags: ["Fintech", "Compliance UX", "Flow design"],
-    cover: "/assets/work/banking-platform.png",
+    cover: assetPath("/assets/work/banking-platform.png"),
     coverAlt:
       "Abstract illustration of a banking application interface with simple cards, a rising trend line, and transaction rows.",
     sections: [
@@ -232,7 +234,7 @@ export const caseStudies: CaseStudy[] = [
     role: "UX Designer · Research, information architecture, interaction design",
     timeframe: "6 months",
     tags: ["B2B tooling", "Information architecture", "Power-user UX"],
-    cover: "/assets/work/workflow-platform.png",
+    cover: assetPath("/assets/work/workflow-platform.png"),
     coverAlt:
       "Abstract illustration of a workflow automation tool with connected nodes and kanban-style columns.",
     sections: [
@@ -273,7 +275,7 @@ export const caseStudies: CaseStudy[] = [
     role: "Lead UX Designer · Product strategy, interaction design, design system contribution",
     timeframe: "7 months",
     tags: ["Data visualization", "SaaS", "Self-serve tooling"],
-    cover: "/assets/work/analytics-platform.png",
+    cover: assetPath("/assets/work/analytics-platform.png"),
     coverAlt:
       "Abstract illustration of a data analytics dashboard with bar charts, scatter points, and filter panels.",
     sections: [
