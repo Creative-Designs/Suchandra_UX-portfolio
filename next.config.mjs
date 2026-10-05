@@ -1,17 +1,16 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-        ],
-      },
-    ]
-  },
-}
+const repositoryName = "REPOSITORY_NAME";
 
-export default nextConfig
+/** @type {import("next").NextConfig} */
+const nextConfig = {
+  output: "export",
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
+  basePath:
+    process.env.NODE_ENV === "production"
+      ? `/${repositoryName}`
+      : "",
+};
+
+export default nextConfig;
