@@ -120,6 +120,9 @@ export const experience = [
 export interface CaseStudySection {
   heading: string
   body: string[]
+  image?: string
+  imageAlt?: string
+  imageCaption?: string
 }
 
 export interface CaseStudy {

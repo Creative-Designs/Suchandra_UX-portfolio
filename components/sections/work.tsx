@@ -1,15 +1,10 @@
-"use client"
-
-import { useState } from "react"
+import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import { Container } from "@/components/ui/container"
 import { SectionHeading } from "@/components/ui/section-heading"
-import { CaseStudyDialog } from "@/components/work/case-study-dialog"
-import { caseStudies, type CaseStudy } from "@/data/content"
+import { caseStudies } from "@/data/content"
 
 export function Work() {
-  const [activeCaseStudy, setActiveCaseStudy] = useState<CaseStudy | null>(null)
-
   return (
     <section id="work" className="border-t border-line py-20 sm:py-28 dark:border-dark-line">
       <Container>
@@ -21,10 +16,9 @@ export function Work() {
 
         <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
           {caseStudies.map((study) => (
-            <button
+            <Link
               key={study.slug}
-              type="button"
-              onClick={() => setActiveCaseStudy(study)}
+              href={`/work/${study.slug}`}
               className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-paper-raised text-left transition-colors hover:border-line-strong dark:border-dark-line dark:bg-dark-raised dark:hover:border-dark-accent/40"
             >
               <div className="overflow-hidden">
@@ -50,12 +44,11 @@ export function Work() {
                   />
                 </span>
               </div>
-            </button>
+            </Link>
           ))}
         </div>
       </Container>
 
-      <CaseStudyDialog caseStudy={activeCaseStudy} onClose={() => setActiveCaseStudy(null)} />
     </section>
   )
 }
