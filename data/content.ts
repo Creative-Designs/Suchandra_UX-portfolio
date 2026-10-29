@@ -117,13 +117,17 @@ export const experience = [
   },
 ]
 
-export interface CaseStudySection {
-  heading: string
-  body: string[]
-  image?: string
-  imageAlt?: string
-  imageCaption?: string
-}
+export type CaseStudyContentBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "list"; items: string[]; ordered?: boolean }
+  | { type: "callout"; text: string; label?: string }
+  | { type: "workflow"; steps: string[] }
+  | { type: "subheading"; text: string }
+  | { type: "image"; src: string; alt: string; caption?: string }
+
+export type CaseStudySection =
+  | { heading: string; body: string[] }
+  | { heading: string; content: CaseStudyContentBlock[] }
 
 export interface CaseStudy {
   slug: string
@@ -132,10 +136,11 @@ export interface CaseStudy {
   environment: string
   summary: string
   role: string
-  timeframe: string
+  timeframe?: string
   tags: string[]
   cover: string
   coverAlt: string
+  responsibilities?: string[]
   sections: CaseStudySection[]
 }
 
@@ -145,43 +150,287 @@ export interface CaseStudy {
 // -----------------------------------------------------------------------
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "claims-workflow",
-    title: "Redesigning a regional claims workflow",
-    category: "Enterprise · Insurance operations",
-    environment: "Banking & Financial Services",
+    slug: "indirect-tax-automation",
+    title: "Indirect Tax Automation Platform",
+    category: "Enterprise · Tax recovery",
+    environment: "Enterprise tax operations",
     summary:
-      "Consolidated a fragmented, multi-tool claims process into a single role-aware workflow for regional operations teams.",
-    role: "Lead UX Designer · End-to-end design, workflow mapping, stakeholder alignment",
-    timeframe: "8 months",
-    tags: ["Workflow design", "Enterprise UX", "Design systems"],
+      "Transforming a fragmented tax recovery process into a workflow-driven enterprise experience for invoice ingestion, review, engagement management, integrations, and audit governance.",
+    role: "UX Lead & Product Designer",
+    tags: ["Workflow design", "Enterprise UX", "Tax recovery", "AI-assisted research"],
     cover: assetPath("/assets/work/claims-platform.png"),
-    coverAlt:
-      "Abstract illustration of a claims operations dashboard with panels, a data table, and a trend chart.",
+    coverAlt: "Illustrative enterprise dashboard with charts, metrics, and a data table.",
+    responsibilities: [
+      "UX strategy",
+      "Product discovery",
+      "Requirements analysis",
+      "Information architecture",
+      "User journey mapping",
+      "AI-assisted UX research",
+      "Workflow design",
+      "Wireframing",
+      "High-fidelity design",
+      "Stakeholder alignment",
+      "Enterprise UX governance",
+    ],
     sections: [
       {
-        heading: "Context",
-        body: [
-          "Regional operations teams were processing claims across three disconnected internal tools, each built for a different stage of the workflow. Handoffs between stages relied on manual status updates and email, which made it difficult to track where a claim actually stood.",
+        heading: "Executive summary",
+        content: [
+          {
+            type: "paragraph",
+            text: "Indirect Tax Automation is an enterprise platform designed to streamline the complete indirect tax recovery lifecycle.",
+          },
+          {
+            type: "paragraph",
+            text: "The platform supports invoice ingestion, automated processing, review workflows, engagement management, SQL integration, administration, and audit governance.",
+          },
+          {
+            type: "paragraph",
+            text: "The project emerged from a need to consolidate fragmented operational processes into a single ecosystem where users could efficiently execute work, monitor progress, and manage engagements without switching between multiple systems.",
+          },
+          {
+            type: "paragraph",
+            text: "Rather than designing another feature-heavy enterprise application, the goal was to create a workflow-centered experience that reflected how users perform their daily tasks.",
+          },
         ],
       },
       {
-        heading: "Problem",
-        body: [
-          "New team members took weeks to become productive because the mental model of 'where does this claim live' was inconsistent across tools. Senior staff spent a disproportionate amount of time answering status questions instead of resolving cases.",
+        heading: "The business challenge",
+        content: [
+          {
+            type: "paragraph",
+            text: "Tax recovery teams were managing complex operational processes involving large volumes of invoice data, multiple engagements, approval workflows, and downstream integrations.",
+          },
+          {
+            type: "paragraph",
+            text: "Although the organization had mature business processes, those processes were not effectively represented in the user experience. Users often knew what needed to be done but struggled to determine where to do it.",
+          },
+          {
+            type: "list",
+            items: [
+              "Work was distributed across multiple systems.",
+              "Users spent time locating information instead of completing tasks.",
+              "Operational visibility was limited.",
+              "Review workflows were inconsistent.",
+              "Administrative processes lacked structure.",
+              "Navigation reflected system architecture rather than user goals.",
+            ],
+          },
+          {
+            type: "callout",
+            label: "The core problem",
+            text: "The problem was not a lack of functionality. It was excessive cognitive effort.",
+          },
         ],
       },
       {
-        heading: "Approach",
-        body: [
-          "I ran structured shadowing sessions with claims handlers across two regional offices to map the real workflow, not the documented one. This surfaced several undocumented workarounds that were critical to how work actually got done.",
-          "From there, I built a unified workflow model with clear state transitions, then translated it into a single interface organized around the claim itself rather than the tool that happened to own a given step.",
-          "I worked closely with engineering to sequence the migration so operations teams could move incrementally, rather than requiring a disruptive big-bang cutover.",
+        heading: "Defining the UX opportunity",
+        content: [
+          {
+            type: "paragraph",
+            text: "During requirements analysis, a pattern quickly emerged: business requirements were written in terms of capabilities.",
+          },
+          {
+            type: "list",
+            items: [
+              "Upload invoices",
+              "Processing status",
+              "Invoice review",
+              "SQL push",
+              "Engagement management",
+              "SQL mapping",
+              "Audit logs",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "While technically accurate, this feature-based view did not reflect how users think. Users rarely wake up intending to use a feature; they wake up intending to complete work.",
+          },
+          {
+            type: "callout",
+            label: "The design shift",
+            text: "Build around workflows and desired outcomes instead of organizing the experience around individual features.",
+          },
         ],
       },
       {
-        heading: "Outcome",
-        body: [
-          "The unified workflow became the default system for regional claims handling, replacing two of the three legacy tools. New hires reached working proficiency measurably faster, and senior staff reported spending less time on status lookups and more on case resolution.",
+        heading: "The real user journey",
+        content: [
+          {
+            type: "paragraph",
+            text: "The operational process revealed a simpler story. Everything else in the platform existed to support this journey.",
+          },
+          {
+            type: "workflow",
+            steps: ["Upload", "Processing", "Invoice review", "Approval", "SQL push"],
+          },
+          {
+            type: "callout",
+            label: "The guiding question",
+            text: "Instead of asking, “How many pages should we create?” the design focus became, “How can we make this journey as effortless as possible?”",
+          },
+        ],
+      },
+      {
+        heading: "How AI influenced the UX process",
+        content: [
+          {
+            type: "paragraph",
+            text: "AI played a significant role throughout the project, not as a design generator, but as a strategic thinking partner. Its greatest value was helping transform feature-oriented requirements into user-centered workflows.",
+          },
+          {
+            type: "paragraph",
+            text: "For example, AI-assisted analysis reframed upload invoices, processing status, invoice review, and SQL push as stages of one operational process rather than independent capabilities. This changed how navigation, workflows, and information architecture were designed.",
+          },
+          { type: "subheading", text: "Requirement refinement" },
+          {
+            type: "paragraph",
+            text: "AI was used to challenge assumptions and improve decision quality, helping reduce unnecessary complexity.",
+          },
+          {
+            type: "list",
+            items: [
+              "Does this need to be a separate page?",
+              "Is this a feature or just a status?",
+              "Is this KPI actionable?",
+              "Is this dashboard adding value?",
+              "What would users expect to do next?",
+            ],
+          },
+          { type: "subheading", text: "Information architecture validation" },
+          {
+            type: "paragraph",
+            text: "Multiple navigation structures were explored and evaluated. The workflow-driven structure consistently proved more intuitive.",
+          },
+          {
+            type: "list",
+            items: [
+              "Dashboard-first",
+              "Feature-driven",
+              "Workflow-driven",
+              "Role-based",
+            ],
+          },
+          { type: "subheading", text: "UX critique and design rationalization" },
+          {
+            type: "paragraph",
+            text: "AI also acted as a continuous reviewer, helping identify areas where the experience could be more focused.",
+          },
+          {
+            type: "list",
+            items: [
+              "Redundant dashboards",
+              "Overuse of KPIs",
+              "Duplicate navigation paths",
+              "Unnecessary modules",
+              "Inconsistent terminology",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "UX strategy",
+        content: [
+          {
+            type: "paragraph",
+            text: "Three principles guided the project:",
+          },
+          {
+            type: "list",
+            items: [
+              "Surface work — users should immediately understand what requires attention.",
+              "Reduce navigation — users should spend time completing work rather than looking for work.",
+              "Reflect real processes — the UI should mirror the actual operational workflow.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "Information architecture",
+        content: [
+          {
+            type: "paragraph",
+            text: "The platform separates personal work, operational execution, engagement management, and administrative governance. Home serves as a navigation hub for the four primary work areas.",
+          },
+          {
+            type: "list",
+            items: ["My Work", "Operations", "Engagements", "Administration"],
+          },
+          {
+            type: "paragraph",
+            text: "This structure gives users a clear starting point while keeping distinct types of work easy to find.",
+          },
+        ],
+      },
+      {
+        heading: "Designing the core experiences",
+        content: [
+          { type: "subheading", text: "Home: a focused navigation hub" },
+          {
+            type: "paragraph",
+            text: "Rather than overwhelming users with analytics, the home experience presents four clear entry points: My Work, Operations, Engagements, and Administration. This reduces clutter and helps users select the area relevant to their goals.",
+          },
+          { type: "subheading", text: "My Work: make the next action clear" },
+          {
+            type: "paragraph",
+            text: "Instead of requiring users to search for tasks, My Work brings tasks directly to them and transforms the system from a repository of information into an actionable workspace.",
+          },
+          {
+            type: "list",
+            items: [
+              "Pending reviews",
+              "Follow-ups",
+              "Decisions requiring attention",
+              "Overdue items",
+            ],
+          },
+          {
+            type: "callout",
+            label: "From search to action",
+            text: "Instead of asking “Where is my work?” users can immediately understand “What should I do next?”",
+          },
+          { type: "subheading", text: "Operations: organize around the process" },
+          {
+            type: "paragraph",
+            text: "Operations became the backbone of the platform. Rather than exposing technical functionality, it was organized around the real business process.",
+          },
+          {
+            type: "workflow",
+            steps: ["Upload", "Processing", "Invoice review", "SQL push"],
+          },
+          {
+            type: "paragraph",
+            text: "This structure reduces cognitive effort because users no longer have to mentally connect separate functions. The interface itself reflects the workflow.",
+          },
+          { type: "subheading", text: "Invoice review: focus on decisions" },
+          {
+            type: "paragraph",
+            text: "Invoice Review is the highest-value interaction in the platform: the point where business decisions happen. Reviewers validate extracted information, compare source data, and decide how each invoice should proceed.",
+          },
+          {
+            type: "list",
+            items: ["Approve", "Request follow-up", "Discard"],
+          },
+          {
+            type: "paragraph",
+            text: "A deliberate effort was made to remove distractions and non-actionable content from this experience, while maintaining administrative functionality for engagement configuration, SQL configuration, and audit logs.",
+          },
+        ],
+      },
+      {
+        heading: "Key design decisions",
+        content: [
+          { type: "subheading", text: "Reduce dashboard dependency" },
+          {
+            type: "paragraph",
+            text: "Enterprise systems often default to charts, analytics, and excessive KPI usage. However, operational users needed actions rather than reports. Dashboards were replaced with workflow-focused views wherever possible.",
+          },
+          { type: "subheading", text: "Prioritize workflows over features" },
+          {
+            type: "paragraph",
+            text: "The platform was structured around the work users perform rather than the technical capabilities of the system, improving navigation clarity.",
+          },
         ],
       },
     ],

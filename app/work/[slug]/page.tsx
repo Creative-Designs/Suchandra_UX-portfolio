@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowLeft, ArrowUpRight } from "lucide-react"
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react"
 import { notFound } from "next/navigation"
 import { Container } from "@/components/ui/container"
-import { caseStudies } from "@/data/content"
+import { caseStudies, type CaseStudyContentBlock } from "@/data/content"
 
 interface CaseStudyPageProps {
   params: Promise<{ slug: string }>
@@ -16,6 +16,92 @@ function getSectionId(heading: string, index: number) {
     .replace(/^-|-$/g, "")
 
   return `section-${index + 1}-${headingSlug}`
+}
+
+function ContentBlock({ block }: { block: CaseStudyContentBlock }) {
+  switch (block.type) {
+    case "paragraph":
+      return (
+        <p className="text-base leading-8 text-ink-muted dark:text-dark-muted">
+          {block.text}
+        </p>
+      )
+    case "list": {
+      const List = block.ordered ? "ol" : "ul"
+      return (
+        <List
+          className={`space-y-2 pl-6 text-base leading-7 text-ink-muted dark:text-dark-muted ${
+            block.ordered ? "list-decimal" : "list-disc"
+          }`}
+        >
+          {block.items.map((item, index) => (
+            <li key={`${item}-${index}`}>{item}</li>
+          ))}
+        </List>
+      )
+    }
+    case "callout":
+      return (
+        <aside className="rounded-r-xl border-l-2 border-accent bg-accent-tint px-5 py-5 dark:border-dark-accent dark:bg-dark-accentTint sm:px-7">
+          {block.label ? (
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent dark:text-dark-accent">
+              {block.label}
+            </p>
+          ) : null}
+          <p className="mt-2 font-serif text-lg leading-relaxed text-ink text-balance dark:text-dark-ink sm:text-xl">
+            {block.text}
+          </p>
+        </aside>
+      )
+    case "workflow":
+      return (
+        <ol
+          aria-label="Workflow"
+          className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5"
+        >
+          {block.steps.map((step, index) => (
+            <li
+              key={`${step}-${index}`}
+              className="flex items-center gap-3 rounded-xl border border-line bg-paper-raised p-4 dark:border-dark-line dark:bg-dark-raised lg:flex-col lg:items-start"
+            >
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent-tint text-xs font-semibold text-accent dark:bg-dark-accentTint dark:text-dark-accent">
+                {index + 1}
+              </span>
+              <span className="flex-1 text-sm font-medium text-ink dark:text-dark-ink">
+                {step}
+              </span>
+              {index < block.steps.length - 1 ? (
+                <ArrowRight
+                  className="hidden h-4 w-4 text-ink-soft dark:text-dark-muted lg:block"
+                  aria-hidden="true"
+                />
+              ) : null}
+            </li>
+          ))}
+        </ol>
+      )
+    case "subheading":
+      return (
+        <h3 className="pt-2 font-serif text-xl font-medium text-ink dark:text-dark-ink sm:text-2xl">
+          {block.text}
+        </h3>
+      )
+    case "image":
+      return (
+        <figure>
+          <img
+            src={block.src}
+            alt={block.alt}
+            className="w-full rounded-xl border border-line bg-paper-raised dark:border-dark-line dark:bg-dark-raised"
+          />
+          {block.caption ? (
+            <figcaption className="mt-3 text-center text-sm text-ink-soft dark:text-dark-muted">
+              {block.caption}
+            </figcaption>
+          ) : null}
+        </figure>
+      )
+  }
 }
 
 export function generateStaticParams() {
@@ -76,19 +162,25 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 {caseStudy.summary}
               </p>
 
-              <dl className="mt-8 grid gap-5 border-y border-line py-5 text-sm dark:border-dark-line sm:grid-cols-3">
+              <dl
+                className={`mt-8 grid gap-5 border-y border-line py-5 text-sm dark:border-dark-line ${
+                  caseStudy.timeframe ? "sm:grid-cols-3" : "sm:grid-cols-2"
+                }`}
+              >
                 <div>
                   <dt className="font-medium text-ink dark:text-dark-ink">Role</dt>
                   <dd className="mt-1 leading-relaxed text-ink-muted dark:text-dark-muted">
                     {caseStudy.role}
                   </dd>
                 </div>
-                <div>
-                  <dt className="font-medium text-ink dark:text-dark-ink">Timeframe</dt>
-                  <dd className="mt-1 text-ink-muted dark:text-dark-muted">
-                    {caseStudy.timeframe}
-                  </dd>
-                </div>
+                {caseStudy.timeframe ? (
+                  <div>
+                    <dt className="font-medium text-ink dark:text-dark-ink">Timeframe</dt>
+                    <dd className="mt-1 text-ink-muted dark:text-dark-muted">
+                      {caseStudy.timeframe}
+                    </dd>
+                  </div>
+                ) : null}
                 <div>
                   <dt className="font-medium text-ink dark:text-dark-ink">Environment</dt>
                   <dd className="mt-1 text-ink-muted dark:text-dark-muted">
@@ -107,6 +199,24 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   </span>
                 ))}
               </div>
+
+              {caseStudy.responsibilities ? (
+                <div className="mt-6">
+                  <h2 className="text-xs font-semibold uppercase tracking-[0.12em] text-ink dark:text-dark-ink">
+                    Responsibilities
+                  </h2>
+                  <ul className="mt-3 flex flex-wrap gap-2">
+                    {caseStudy.responsibilities.map((responsibility) => (
+                      <li
+                        key={responsibility}
+                        className="rounded-md border border-line px-2.5 py-1.5 text-xs text-ink-muted dark:border-dark-line dark:text-dark-muted"
+                      >
+                        {responsibility}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </header>
 
             <figure className="mx-auto mt-10 max-w-5xl sm:mt-14">
@@ -140,12 +250,6 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               </nav>
 
               <div className="min-w-0">
-                <div className="mb-10 border-l-2 border-accent pl-5 dark:border-dark-accent sm:pl-7">
-                  <p className="text-xl font-serif leading-relaxed text-ink text-balance dark:text-dark-ink sm:text-2xl">
-                    {caseStudy.summary}
-                  </p>
-                </div>
-
                 <div className="space-y-12 sm:space-y-16">
                   {caseStudy.sections.map((section, index) => (
                     <section
@@ -153,34 +257,24 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                       id={getSectionId(section.heading, index)}
                       className="scroll-mt-24"
                     >
-                      <h2 className="font-serif text-2xl font-medium text-ink sm:text-3xl dark:text-dark-ink">
+                      <h2 className="font-serif text-2xl font-medium text-ink text-balance sm:text-3xl dark:text-dark-ink">
                         {section.heading}
                       </h2>
                       <div className="mt-5 space-y-4">
-                        {section.body.map((paragraph, paragraphIndex) => (
-                          <p
-                            key={paragraphIndex}
-                            className="text-base leading-8 text-ink-muted dark:text-dark-muted"
-                          >
-                            {paragraph}
-                          </p>
-                        ))}
+                        {"content" in section
+                          ? section.content.map((block, blockIndex) => (
+                              <ContentBlock
+                                key={`${block.type}-${blockIndex}`}
+                                block={block}
+                              />
+                            ))
+                          : section.body.map((paragraph, paragraphIndex) => (
+                              <ContentBlock
+                                key={`paragraph-${paragraphIndex}`}
+                                block={{ type: "paragraph", text: paragraph }}
+                              />
+                            ))}
                       </div>
-
-                      {section.image ? (
-                        <figure className="mt-8">
-                          <img
-                            src={section.image}
-                            alt={section.imageAlt ?? ""}
-                            className="w-full rounded-xl border border-line bg-paper-raised dark:border-dark-line dark:bg-dark-raised"
-                          />
-                          {section.imageCaption ? (
-                            <figcaption className="mt-3 text-center text-sm text-ink-soft dark:text-dark-muted">
-                              {section.imageCaption}
-                            </figcaption>
-                          ) : null}
-                        </figure>
-                      ) : null}
                     </section>
                   ))}
                 </div>
