@@ -3,7 +3,8 @@ import Link from "next/link"
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react"
 import { notFound } from "next/navigation"
 import { Container } from "@/components/ui/container"
-import { caseStudies, type CaseStudyContentBlock } from "@/data/content"
+import { caseStudies, profile, type CaseStudyContentBlock } from "@/data/content"
+import { OnThisPageNav } from "./on-this-page-nav"
 
 interface CaseStudyPageProps {
   params: Promise<{ slug: string }>
@@ -134,9 +135,9 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <Container className="flex h-16 items-center justify-between gap-4">
           <Link
             href="/"
-            className="text-sm font-semibold tracking-tight text-ink dark:text-dark-ink"
+            className="font-serif text-lg font-bold tracking-tight text-ink dark:text-dark-ink sm:text-xl"
           >
-            Suchandra Das
+            {profile.name}
           </Link>
           <Link
             href="/#work"
@@ -228,26 +229,12 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             </figure>
 
             <div className="mx-auto mt-14 grid max-w-5xl gap-10 lg:mt-20 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-16">
-              <nav
-                aria-label="On this page"
-                className="h-fit rounded-xl border border-line bg-paper-raised p-5 dark:border-dark-line dark:bg-dark-raised lg:sticky lg:top-24"
-              >
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-ink dark:text-dark-ink">
-                  On this page
-                </p>
-                <ol className="mt-4 flex flex-wrap gap-x-4 gap-y-2 lg:flex-col lg:gap-3">
-                  {caseStudy.sections.map((section, index) => (
-                    <li key={`${section.heading}-${index}`}>
-                      <a
-                        href={`#${getSectionId(section.heading, index)}`}
-                        className="text-sm text-ink-muted transition-colors hover:text-accent dark:text-dark-muted dark:hover:text-dark-accent"
-                      >
-                        {section.heading}
-                      </a>
-                    </li>
-                  ))}
-                </ol>
-              </nav>
+              <OnThisPageNav
+                sections={caseStudy.sections.map((section, index) => ({
+                  heading: section.heading,
+                  id: getSectionId(section.heading, index),
+                }))}
+              />
 
               <div className="min-w-0">
                 <div className="space-y-12 sm:space-y-16">

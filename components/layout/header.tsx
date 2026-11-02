@@ -23,7 +23,7 @@ export function Header() {
       <Container className="flex h-16 items-center justify-between">
         <a
           href="#top"
-          className="text-sm font-semibold tracking-tight text-ink dark:text-dark-ink"
+          className="font-serif text-lg font-bold tracking-tight text-ink dark:text-dark-ink sm:text-xl"
         >
           {profile.name}
         </a>
