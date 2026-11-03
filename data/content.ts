@@ -14,12 +14,12 @@ import { assetPath } from "@/lib/assets"
 
 export const profile = {
   name: "Suchandra Das",
-  role: "Lead UX Designer",
+  role: "UI/UX Designer",
   roleSecondary: "Senior UI/UX Designer",
   location: "Bengaluru, India",
   positioning: "I design clear, scalable enterprise experiences for complex workflows.",
   summary:
-    "I'm a UX designer with 8–9 years of experience shaping enterprise software — from fintech and banking platforms to B2B and data-heavy SaaS products. I work closely with product and engineering to turn ambiguous, high-complexity problems into experiences that are clear, consistent, and easy to scale.",
+    "I'm a UX designer with 9 years of experience shaping enterprise software — from fintech and banking platforms to B2B and data-heavy SaaS products. I work closely with product and engineering to turn ambiguous, high-complexity problems into experiences that are clear, consistent, and easy to scale.",
   email: "im.suchandradas0@gmail.com",
   linkedin: "https://www.linkedin.com/in/suchandradas",
   resumeUrl: "/resume/Suchandra-Das-Resume.pdf",
@@ -137,6 +137,7 @@ export interface CaseStudy {
   summary: string
   role: string
   timeframe?: string
+  tools?: string[]
   tags: string[]
   cover: string
   coverAlt: string
@@ -156,7 +157,9 @@ export const caseStudies: CaseStudy[] = [
     environment: "Enterprise tax operations",
     summary:
       "Transforming a fragmented tax recovery process into a workflow-driven enterprise experience for invoice ingestion, review, engagement management, integrations, and audit governance.",
-    role: "UX Lead & Product Designer",
+    role: "UI/UX Design · Workflow design, Prototyping, AI-assisted research",
+    timeframe: "4 weeks",
+    tools: ["Figma", "Copilot"],
     tags: ["Workflow design", "Enterprise UX", "Tax recovery", "AI-assisted research"],
     cover: assetPath("/assets/work/claims-platform.png"),
     coverAlt: "Illustrative enterprise dashboard with charts, metrics, and a data table.",
@@ -334,14 +337,14 @@ export const caseStudies: CaseStudy[] = [
         content: [
           {
             type: "paragraph",
-            text: "Three principles guided the project:",
+            text: "The project was guided by three principles.",
           },
           {
             type: "list",
             items: [
-              "Surface work — users should immediately understand what requires attention.",
-              "Reduce navigation — users should spend time completing work rather than looking for work.",
-              "Reflect real processes — the UI should mirror the actual operational workflow.",
+              "Surface Work — users should immediately understand what requires attention.",
+              "Reduce Navigation — users should spend time completing work rather than looking for work.",
+              "Reflect Real Processes — the UI should mirror the actual operational workflow.",
             ],
           },
         ],
@@ -351,30 +354,43 @@ export const caseStudies: CaseStudy[] = [
         content: [
           {
             type: "paragraph",
-            text: "The platform separates personal work, operational execution, engagement management, and administrative governance. Home serves as a navigation hub for the four primary work areas.",
+            text: "The platform was ultimately organized into four primary areas: Home, My Work, Operations, Engagements, and Administration.",
           },
           {
             type: "list",
-            items: ["My Work", "Operations", "Engagements", "Administration"],
+            items: [
+              "Home",
+              "My Work",
+              "Operations",
+              "Engagements",
+              "Administration",
+            ],
           },
           {
             type: "paragraph",
-            text: "This structure gives users a clear starting point while keeping distinct types of work easy to find.",
+            text: "This structure created a clear separation between personal work, operational execution, engagement management, and administrative governance.",
           },
         ],
       },
       {
-        heading: "Designing the core experiences",
+        heading: "Home experience",
         content: [
-          { type: "subheading", text: "Home: a focused navigation hub" },
           {
             type: "paragraph",
-            text: "Rather than overwhelming users with analytics, the home experience presents four clear entry points: My Work, Operations, Engagements, and Administration. This reduces clutter and helps users select the area relevant to their goals.",
+            text: "Rather than overwhelming users with analytics, the home experience serves as a navigation hub. It presents four clear entry points: My Work, Operations, Engagements, and Administration.",
           },
-          { type: "subheading", text: "My Work: make the next action clear" },
           {
             type: "paragraph",
-            text: "Instead of requiring users to search for tasks, My Work brings tasks directly to them and transforms the system from a repository of information into an actionable workspace.",
+            text: "This approach reduces clutter while helping users immediately select the area relevant to their goals.",
+          },
+        ],
+      },
+      {
+        heading: "My Work",
+        content: [
+          {
+            type: "paragraph",
+            text: "One of the most important user-centered innovations introduced during the project was My Work. Instead of requiring users to search for tasks, the platform brings work directly to them.",
           },
           {
             type: "list",
@@ -388,12 +404,16 @@ export const caseStudies: CaseStudy[] = [
           {
             type: "callout",
             label: "From search to action",
-            text: "Instead of asking “Where is my work?” users can immediately understand “What should I do next?”",
+            text: "Instead of asking, “Where is my work?” users immediately understand, “What should I do next?”",
           },
-          { type: "subheading", text: "Operations: organize around the process" },
+        ],
+      },
+      {
+        heading: "Operations",
+        content: [
           {
             type: "paragraph",
-            text: "Operations became the backbone of the platform. Rather than exposing technical functionality, it was organized around the real business process.",
+            text: "Operations became the backbone of the platform. Rather than exposing technical functionality, operations were organized around the real business process.",
           },
           {
             type: "workflow",
@@ -401,35 +421,142 @@ export const caseStudies: CaseStudy[] = [
           },
           {
             type: "paragraph",
-            text: "This structure reduces cognitive effort because users no longer have to mentally connect separate functions. The interface itself reflects the workflow.",
+            text: "This structure reduced cognitive effort because users no longer had to mentally connect separate functions. The interface itself reflects the workflow.",
           },
-          { type: "subheading", text: "Invoice review: focus on decisions" },
+        ],
+      },
+      {
+        heading: "Invoice review",
+        content: [
           {
             type: "paragraph",
-            text: "Invoice Review is the highest-value interaction in the platform: the point where business decisions happen. Reviewers validate extracted information, compare source data, and decide how each invoice should proceed.",
+            text: "Invoice Review represents the highest-value interaction within the platform. This is where business decisions occur. Reviewers validate extracted information, compare source data, and decide how each invoice should proceed.",
           },
           {
             type: "list",
-            items: ["Approve", "Request follow-up", "Discard"],
+            items: ["Approval", "Follow-up", "Discard"],
           },
           {
             type: "paragraph",
-            text: "A deliberate effort was made to remove distractions and non-actionable content from this experience, while maintaining administrative functionality for engagement configuration, SQL configuration, and audit logs.",
+            text: "A deliberate effort was made to remove distractions and non-actionable content from this experience. The result is a focused review environment optimized for accuracy and speed.",
+          },
+        ],
+      },
+      {
+        heading: "Engagement management",
+        content: [
+          {
+            type: "paragraph",
+            text: "Early design exploration revealed a tendency to mix engagement management with operational metrics. This created role ambiguity. The design was restructured to separate engagement management from processing activities.",
+          },
+          {
+            type: "list",
+            items: [
+              "Engagement visibility",
+              "Engagement status",
+              "Team assignments",
+              "Engagement details",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "This separation improved clarity and reduced information overload.",
+          },
+        ],
+      },
+      {
+        heading: "Administration",
+        content: [
+          {
+            type: "paragraph",
+            text: "Administrative capabilities initially appeared as several independent functions. A direct implementation would have introduced excessive navigation complexity.",
+          },
+          {
+            type: "paragraph",
+            text: "To simplify the experience, administrative capabilities were consolidated into four logical groups.",
+          },
+          {
+            type: "list",
+            items: [
+              "User & Access Management",
+              "Engagement Controls",
+              "SQL Configuration",
+              "Audit Logs",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "This reduced cognitive load while maintaining full administrative functionality.",
           },
         ],
       },
       {
         heading: "Key design decisions",
         content: [
-          { type: "subheading", text: "Reduce dashboard dependency" },
+          { type: "subheading", text: "Dashboard reduction" },
           {
             type: "paragraph",
-            text: "Enterprise systems often default to charts, analytics, and excessive KPI usage. However, operational users needed actions rather than reports. Dashboards were replaced with workflow-focused views wherever possible.",
+            text: "One of the most intentional design decisions was reducing dashboard dependency. Enterprise systems often default to charts, analytics, and excessive KPI usage. However, user analysis revealed that operational users needed actions rather than reports. As a result, dashboards were replaced with workflow-focused views wherever possible.",
           },
-          { type: "subheading", text: "Prioritize workflows over features" },
+          { type: "subheading", text: "Workflow over features" },
           {
             type: "paragraph",
-            text: "The platform was structured around the work users perform rather than the technical capabilities of the system, improving navigation clarity.",
+            text: "The platform was structured around the work users perform rather than the technical capabilities of the system. This dramatically improved navigation clarity.",
+          },
+          { type: "subheading", text: "Progressive disclosure" },
+          {
+            type: "paragraph",
+            text: "Information is surfaced only when needed. Users see the right amount of context at the right moment without becoming overwhelmed.",
+          },
+        ],
+      },
+      {
+        heading: "Impact",
+        content: [
+          {
+            type: "paragraph",
+            text: "The final solution produced a number of organizational benefits.",
+          },
+          {
+            type: "list",
+            items: [
+              "Reduced cognitive load",
+              "Improved task visibility",
+              "Better workflow alignment",
+              "Increased scalability",
+              "Stronger governance",
+              "Faster decision making",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "What I learned",
+        content: [
+          {
+            type: "paragraph",
+            text: "This project reinforced a lesson that applies to many enterprise products: users rarely need more dashboards. They need a clear understanding of what must be done next.",
+          },
+          {
+            type: "paragraph",
+            text: "The most successful outcome of this project was not the interface itself. It was transforming a complex feature set into a coherent operational workflow. AI accelerated that transformation by helping bridge the gap between business requirements and user needs, enabling faster decision-making and more confident UX choices throughout the project.",
+          },
+        ],
+      },
+      {
+        heading: "Final outcome",
+        content: [
+          {
+            type: "paragraph",
+            text: "The final platform successfully consolidated invoice processing, engagement management, administration, and governance into a single workflow-driven experience.",
+          },
+          {
+            type: "paragraph",
+            text: "Instead of navigating systems, users navigate work. Instead of searching for information, users see what matters. Instead of learning software, users follow a process they already understand.",
+          },
+          {
+            type: "paragraph",
+            text: "That shift ultimately transformed the platform from a collection of features into a product experience.",
           },
         ],
       },
@@ -444,6 +571,7 @@ export const caseStudies: CaseStudy[] = [
       "Reworked a compliance-heavy verification flow to reduce drop-off while keeping every required regulatory step intact.",
     role: "Senior UX Designer · Flow design, compliance collaboration, pattern library",
     timeframe: "5 months",
+    tools: ["Figma", "Miro", "Jira"],
     tags: ["Fintech", "Compliance UX", "Flow design"],
     cover: assetPath("/assets/work/banking-platform.png"),
     coverAlt:
@@ -485,6 +613,7 @@ export const caseStudies: CaseStudy[] = [
       "Modernized a legacy internal console used daily by operations staff, prioritizing task efficiency over visual novelty.",
     role: "UX Designer · Research, information architecture, interaction design",
     timeframe: "6 months",
+    tools: ["Figma", "Miro", "Notion"],
     tags: ["B2B tooling", "Information architecture", "Power-user UX"],
     cover: assetPath("/assets/work/workflow-platform.png"),
     coverAlt:
@@ -526,6 +655,7 @@ export const caseStudies: CaseStudy[] = [
       "Designed a configurable analytics workspace that let non-technical teams build their own views without engineering support.",
     role: "Lead UX Designer · Product strategy, interaction design, design system contribution",
     timeframe: "7 months",
+    tools: ["Figma", "Tableau", "Jira"],
     tags: ["Data visualization", "SaaS", "Self-serve tooling"],
     cover: assetPath("/assets/work/analytics-platform.png"),
     coverAlt:

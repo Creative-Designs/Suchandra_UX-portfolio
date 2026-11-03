@@ -165,7 +165,11 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
               <dl
                 className={`mt-8 grid gap-5 border-y border-line py-5 text-sm dark:border-dark-line ${
-                  caseStudy.timeframe ? "sm:grid-cols-3" : "sm:grid-cols-2"
+                  caseStudy.tools && caseStudy.timeframe
+                    ? "sm:grid-cols-4"
+                    : caseStudy.tools || caseStudy.timeframe
+                      ? "sm:grid-cols-3"
+                      : "sm:grid-cols-2"
                 }`}
               >
                 <div>
@@ -188,6 +192,14 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                     {caseStudy.environment}
                   </dd>
                 </div>
+                {caseStudy.tools && caseStudy.tools.length > 0 ? (
+                  <div>
+                    <dt className="font-medium text-ink dark:text-dark-ink">Tools used</dt>
+                    <dd className="mt-1 text-ink-muted dark:text-dark-muted">
+                      {caseStudy.tools.join(", ")}
+                    </dd>
+                  </div>
+                ) : null}
               </dl>
 
               <div className="mt-6 flex flex-wrap gap-2">

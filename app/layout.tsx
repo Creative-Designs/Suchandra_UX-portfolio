@@ -4,9 +4,9 @@ import { ThemeProvider } from "@/lib/theme"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Suchandra Das — Lead UX Designer",
+  title: "Suchandra Das — Senior UX Designer",
   description:
-    "Suchandra Das is a Lead UX Designer with 8–9 years of experience designing clear, scalable enterprise experiences across fintech, banking, B2B, and SaaS platforms.",
+    "Suchandra Das is a Senior UX Designer with 9 years of experience designing clear, scalable enterprise experiences across fintech, banking, B2B, and SaaS platforms.",
   generator: "v0.app",
 }
 
